@@ -1,0 +1,22 @@
+/*
+   Email automation
+*/
+function sendEmails(){
+  var sheetUpdates = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Updates");
+  var sheetContacts = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contacts");
+
+  // Email addresses stored as a range
+  var dataRange = sheetContacts.getRange(2,1,sheetContacts.getLastRow()-1).getValues();
+
+  // Update is stored in subject
+  var message = sheetUpdates.getRange(2,2).getValue();
+
+// Subject is stored in subject
+var subject =  "Weekly Update!";
+
+  // sends email to all email addresses
+  for(var i=0; i<dataRange.length; ++i){
+    var emailAddress = dataRange[i];
+    MailApp.sendEmail(emailAddress[0],subject, message);
+  }
+}
